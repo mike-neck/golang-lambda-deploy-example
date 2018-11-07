@@ -5,6 +5,8 @@ env:
     bucket: "key_2017_11_07"
 
 phases:
+  pre_build:
+    - echo $(bucket)
   build:
     commands:
     - make archive
