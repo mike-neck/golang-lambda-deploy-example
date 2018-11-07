@@ -6,7 +6,8 @@ env:
 
 phases:
   pre_build:
-    - echo $(bucket)
+    commands:
+      - echo $(bucket)
   build:
     commands:
     - make archive
