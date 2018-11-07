@@ -19,6 +19,7 @@ dep:
 	@echo dep
 	@go get github.com/pelletier/go-toml
 	@go get github.com/aws/aws-lambda-go/lambda
+	@go get github.com/mike-neck/golang-lambda-deploy-example
 resource:
 	@echo resource
 	@mkdir $(BUILD_DIR)
