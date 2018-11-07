@@ -1,0 +1,18 @@
+version: 0.2
+
+env:
+  parameter_store:
+    bucket: "key_2017_11_07"
+
+phases:
+  build:
+    commands:
+    - make archive
+  upload:
+    commands:
+    - aws cloudformation package --template-file sam.yml --s3-bucket ${bucket} --output-template-file build/deploy.yml
+artifacts:
+  type: zip
+  files:
+    - sam.yml
+    - build/deploy.yml
