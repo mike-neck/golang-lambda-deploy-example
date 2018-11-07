@@ -1,0 +1,15 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Resources:
+  AppFunction:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      Handler: hello-handler
+      Runtime: go1.x
+      CodeUri: ./build/hello-handler.zip
+      Events:
+        AppApi:
+          Type: Api
+          Properties:
+            Path: /app
+            Method: get
