@@ -8,6 +8,7 @@ phases:
   pre_build:
     commands:
       - echo $(bucket)
+      - aws ssm get-parameter --name key_2018_11_07 --query 'Name' --output text
   build:
     commands:
     - make archive
