@@ -1,20 +1,19 @@
 version: 0.2
 
 env:
-  parameter_store:
+  parameter-store:
     bucket: "key_2018_11_07"
 
 phases:
   pre_build:
     commands:
-      - echo $(bucket)
-      - aws ssm get-parameters --region ap-northeast-1 --name key_2018_11_07 --with-decryption --query 'Parameters[*].Value' --output text
+      - echo $bucket
   build:
     commands:
     - make archive
   post_build:
     commands:
-    - aws cloudformation package --template-file sam.yml --s3-bucket ${bucket} --output-template-file build/deploy.yml
+    - aws cloudformation package --template-file sam.yml --s3-bucket $bucket --output-template-file build/deploy.yml
 artifacts:
   type: zip
   files:
