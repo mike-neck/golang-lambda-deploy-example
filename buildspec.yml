@@ -2,7 +2,7 @@ version: 0.2
 
 env:
   parameter_store:
-    bucket: "key_2017_11_07"
+    bucket: "key_2018_11_07"
 
 phases:
   pre_build:
