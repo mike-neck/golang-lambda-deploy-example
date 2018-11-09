@@ -10,12 +10,13 @@ phases:
       - echo $bucket
   build:
     commands:
-    - make archive
+    - make build
   post_build:
     commands:
     - aws cloudformation package --template-file sam.yml --s3-bucket $bucket --output-template-file build/deploy.yml
 artifacts:
   type: zip
+  name: 'build-artifact'
   files:
     - sam.yml
     - build/deploy.yml

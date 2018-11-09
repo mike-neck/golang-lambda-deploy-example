@@ -1,15 +1,35 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Transform: 'AWS::Serverless-2016-10-31'
+Transform: AWS::Serverless-2016-10-31
+Description: deploy example
+
+Globals:
+  Function:
+    Timeout: 5
+
 Resources:
   AppFunction:
-    Type: "AWS::Serverless::Function"
+    Type: AWS::Serverless::Function
     Properties:
+      CodeUri: build/
       Handler: hello-handler
       Runtime: go1.x
-      CodeUri: ./build/hello-handler.zip
+      Tracing: Active
       Events:
         AppApi:
           Type: Api
           Properties:
-            Path: /app
-            Method: get
+            Path: /hello
+            Method: POST
+
+Outputs:
+  AppApi:
+    Description: "API Gateway endpoint URL for develop environment for First Function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
+
+  AppFunction:
+    Description: "First Lambda Function ARN"
+    Value: !GetAtt AppFunction.Arn
+
+  AppFunctionRole:
+    Description: "Implicit IAM Role created for App function"
+    Value: !GetAtt AppFunctionRole.Arn

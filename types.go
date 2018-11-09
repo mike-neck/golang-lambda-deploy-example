@@ -22,17 +22,15 @@ type AppResponse struct {
 	User string `json:"user"`
 }
 
-func (app AppMessage) HandleRequest(ctx context.Context, request UserRequest) (events.APIGatewayProxyResponse, error) {
+func (app AppMessage) HandleRequest(ctx context.Context, event events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	request := UserRequest{}
+	e := json.Unmarshal([]byte(event.Body), &request)
+	if e != nil {
+		return events.APIGatewayProxyResponse{StatusCode: http.StatusBadRequest, Body: "¯\\_(ツ)_/¯"}, e
+	}
 	log.Println("normal", "request", "context:", ctx, ", request:", request)
 	code := request.StatusCode
-	switch code {
-	case http.StatusOK:
-	case http.StatusCreated:
-	case http.StatusNoContent:
-	case http.StatusBadRequest:
-	case http.StatusForbidden:
-	case http.StatusNotFound:
-	case http.StatusConflict:
+	if (200 <= code && code < 300) || (400 <= code && code < 500) {
 		return (&AppResponse{App: app.Message, User: request.Message}).Json(code)
 	}
 	return events.APIGatewayProxyResponse{StatusCode: http.StatusNotFound, Body: "¯\\_(ツ)_/¯"}, nil
