@@ -20,9 +20,6 @@ Resources:
           Properties:
             Path: /hello
             Method: POST
-      AutoPublishAlias:
-        Type: Canary10Percent15Minutes
-      Role: !Ref IAMRoleForCodeDeploy
 
 Outputs:
   AppApi:
